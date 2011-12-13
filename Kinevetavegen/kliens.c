@@ -33,7 +33,6 @@ main (int argc, char *argv[])
   int err;			// error code
   int ip;			// ip address
   char on;			// 
-  char buffer[BUFSIZE + 1];	// datagram dat buffer area
   char server_addr[16];		// server address    
 
   /* Initialization */
@@ -194,6 +193,8 @@ main (int argc, char *argv[])
 
 }
 
+/*Rajzol függvény amely kirajzolja a pályát */
+
 void
 rajzol (int tomb1[], int tomb2[])
 {
@@ -251,6 +252,9 @@ rajzol (int tomb1[], int tomb2[])
 
 }
 
+
+/*Status fogadása a magadott socketen a megadott tömbökbe */
+
 void
 statusfogad (int fd, int * tomb1, int * tomb2)
 {
@@ -261,9 +265,14 @@ statusfogad (int fd, int * tomb1, int * tomb2)
   tomb2[1]=recvint(fd);
 }
 
+
+/*Integer küldése konvertálással együtt (htons) */
+
 void sendint(int fd,int kuldott){
   int trnmsize;
   int ideig;
+  
+  /*Host to Network*/
   
   ideig=htons(kuldott);
   
@@ -274,6 +283,8 @@ void sendint(int fd,int kuldott){
 	  exit (6);
 	}
 }
+
+/* Integer fogadása konvertálással(ntohs)*/
 
 int recvint(int fd){
   int trnmsize;
@@ -286,7 +297,7 @@ int recvint(int fd){
 	  printf ("Cannot send data to the client.\n");
 	  exit (6);
 	}
-	
+/*Network to Host */
   return (int) ntohs(ideig);
   
 }
